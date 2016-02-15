@@ -114,10 +114,19 @@ def plot_hist( xlist, num_of_bins, hist_weights, title, xlab, ylab, log_y, pcoun
 	dummy = pcounter + 1
 	return dummy
 
+def integrate_basic( BLIST, boundsLIST, low_bound, high_bound ):
+	#Integrats the function numerically. 
+	integral_value = 0
+	for i, boundval in enumerate(boundsLIST[:-1]):
+		binwidth = abs(boundsLIST[i+1]-boundsLIST[i])
+		current_value = BLIST[i] * boundval * (binwidth)
+		integral_value += current_value
+
+	return integral_value
 def find_z_max_given_M( Mag_list, z_list,  M_r ):
 	z_Max = 0 
 	#Enumerate the redshifts. 
-	for i, x, in enumerate(z_LIST):
+	for i, x in enumerate(z_LIST):
 		#Find the Max redshift for a given M_r
 		if Mag_list[i] == M_r and z_Max < x:
 			z_Max = x  
@@ -283,7 +292,7 @@ B_freqNORMLIST = []
 #Kelvin
 Temperture_F = 100. 
 #Bins
-num_bins = 750
+num_bins = 1000
 
 if len(sys.argv) == 1:
 	print("setting default values.")
@@ -296,31 +305,31 @@ if len(argv) == 3:
 	Temperture = sys.argv[1] 
 	print("Temperture: %.2f " % Temperture)
 """
-
+#Records key values: Peaks are in linear space. 
 Temp_k = conv_F_to_K( Temperture_F )
 wave_peak = calc_weins_wave( Temp_k )
 freq_peak = calc_weins_freq( Temp_k )
 
-#Set Bounds in cm 
+#Set Bounds in cm; in log space 
 #lower_bound_wave = -9.
 #upper_bound_wave = 1.
 wave_peak_log = np.log10(wave_peak)
-lower_bound_wave =wave_peak_log -3.
-upper_bound_wave = wave_peak_log+3.
+lower_bound_wave =wave_peak_log -2.
+upper_bound_wave = wave_peak_log+2.
 
 
 #Set Bounds in cm 
 #lower_bound_freq = 9.
 #upper_bound_freq = 16.
 freq_peak_log =  np.log10(freq_peak)
-lower_bound_freq = freq_peak_log-3.
-upper_bound_freq = freq_peak_log+3.
+lower_bound_freq = freq_peak_log-2.
+upper_bound_freq = freq_peak_log+2.
 
-print("PEAKS:\n Wave: %.2f \n Freq: %.2f" % (wave_peak_log, freq_peak_log))
+print("\nPEAKS:\n Wave: %.2f \n Freq: %.2f \n" % (wave_peak_log, freq_peak_log))
 print("lower wave: %.4f" % lower_bound_wave)
 print("upper wave: %.4f" % upper_bound_wave)
 print("lower freq: %.4f" % lower_bound_freq)
-print("upper freq: %.4f" % upper_bound_freq)
+print("upper freq: %.4f \n" % upper_bound_freq)
 
 
 boundwaveLIST = np.logspace(lower_bound_wave, upper_bound_wave, num_bins)
@@ -378,6 +387,26 @@ max_b_freq = max(B_freq_mksLIST)
 for idx4, B_value in enumerate(B_freq_mksLIST):
 	B_freqNORMLIST.append(B_value/max_b_freq)
 
+
+
+"""
+=====================================================
+Integrate Spectrum from Arbitrary Bounds
+=====================================================
+"""
+#Sets the DEFAULT bounds for integration
+low_bound_wave  = 1
+high_bound_wave = 1
+low_bound_wave  = wave_peak_log - 1.5
+high_bound_wave = wave_peak_log + 1.5
+#low_bound_freq  = 
+#high_bound_freq = 
+
+
+integrated_intensity_mks = integrate_basic( B_wave_mksLIST, boundwaveLIST, low_bound_wave, high_bound_wave )
+print("===================================================")
+print("The Intensity (mks) for [  %.1f , %.1f ] is : %g" % (low_bound_wave, high_bound_wave, integrated_intensity_mks))
+print("===================================================")
 
 
 
