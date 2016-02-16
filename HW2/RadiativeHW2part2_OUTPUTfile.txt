@@ -1,0 +1,51 @@
+Number of arguments: 2
+('Argument List:', "['RadiativeHW2part2.py', '500']")
+Temperture: 500.00 F
+
+PEAKS:
+ Wave: -3.26 
+ Freq: 13.50 
+
+lower wave: -5.2648
+upper wave: -1.2648
+lower freq: 11.4961
+upper freq: 15.4961 
+
+SETTING EYE VALUES!
+Setting integration bounds to default... 
+Setting integration bounds to cover all values
+===================================================
+The Intensity (cgs) wave for [  -5.3 , -1.3 ] is : 1461.78
+The Intensity (cgs) specific wave for [  2.283e-01 ]cm is : 0.00000e+00
+The Intensity (mks) specific wave for [  4.963e-10 ] m is : 0.00000e+00
+Specific Wavelength ==> 4.96268 Angstroms
+Peak [cm]= 0.2282661 
+The # of photons emitted from the eye at peak: 2.3335e+09 
+Peak [cm]= 4.9626763e-08 
+The # of photons emitted from a potato: 0.0000e+00 
+The # of photons emitted from a star: 0.0000e+00 
+The Intensity (cgs) given a SA [  314.2 ]cm^3 is : 459231
+===================================================
+Entered Basic Plot Function
+Length: x_data: 1000
+Length: y_data: 1000
+
+Saving plot: /home/chasonn/Feb14RadTransHW2_plot1.png
+Entered Basic Plot Function
+Length: x_data: 1000
+Length: y_data: 1000
+
+Saving plot: /home/chasonn/Feb14RadTransHW2_plot2.png
+Entered Basic Plot Function
+Length: x_data: 1000
+Length: y_data: 1000
+
+Saving plot: /home/chasonn/Feb14RadTransHW2_plot3.png
+Entered Basic Plot Function
+Length: x_data: 1000
+Length: y_data: 1000
+
+Saving plot: /home/chasonn/Feb14RadTransHW2_plot4.png
+Time: 
+0:00:01.293824
+End of Program. 

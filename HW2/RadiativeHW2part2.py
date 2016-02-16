@@ -338,7 +338,7 @@ B_freqNORMLIST = []
 #Kelvin
 Temperture_F = 100. 
 #Bins
-num_bins = 1000
+num_bins = 10000
 """
 =====================
 ENERGY SETTINGS
@@ -373,8 +373,8 @@ freq_peak = calc_weins_freq( Temp_k )
 #lower_bound_wave = -9.
 #upper_bound_wave = 1.
 wave_peak_log = np.log10(wave_peak)
-lower_bound_wave =wave_peak_log -2.
-upper_bound_wave = wave_peak_log+2.
+lower_bound_wave =wave_peak_log -1.5
+upper_bound_wave = wave_peak_log+1.5
 
 
 #Set Bounds in cm 
@@ -463,8 +463,8 @@ low_bound_wave  = 1
 high_bound_wave = 1
 #Set to whatever you would like: gets executed by raising to power. 
 print("Setting integration bounds to cover all values")
-low_bound_wave  = wave_peak_log - 2
-high_bound_wave = wave_peak_log + 2
+low_bound_wave  = wave_peak_log - 1
+high_bound_wave = wave_peak_log + 1
 
 
 """
