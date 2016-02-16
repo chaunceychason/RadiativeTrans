@@ -391,6 +391,11 @@ print("lower freq: %.4f" % lower_bound_freq)
 print("upper freq: %.4f \n" % upper_bound_freq)
 
 
+print("SETTING EYE VALUES!")
+specific_energy_eye = wave_peak
+specific_wave_eye = calc_wavelength_given_energy(specific_energy_eye)
+
+
 boundwaveLIST = np.logspace(lower_bound_wave, upper_bound_wave, num_bins)
 boundfreqLIST = np.logspace(lower_bound_freq, upper_bound_freq, num_bins)
 
@@ -453,12 +458,14 @@ Integrate Spectrum from Arbitrary Bounds
 =====================================================
 """
 #Sets the DEFAULT bounds for integration
+print("Setting integration bounds to default... ")
 low_bound_wave  = 1
 high_bound_wave = 1
 #Set to whatever you would like: gets executed by raising to power. 
-print("Setting integration bounds to default... ")
-low_bound_wave  = wave_peak_log - 1
-high_bound_wave = wave_peak_log + 1
+print("Setting integration bounds to cover all values")
+low_bound_wave  = wave_peak_log - 2
+high_bound_wave = wave_peak_log + 2
+
 
 """
 print("TEMP SET")
@@ -474,21 +481,34 @@ high_bound_wave = np.log10(integration_upper_cm)
 
 integrated_intensity_cgs = integrate_basic( B_wave_cgsLIST, boundwaveLIST, low_bound_wave, high_bound_wave )
 print("===================================================")
-print("The Intensity (mks) wave for [  %.1f , %.1f ] is : %g" % (low_bound_wave, high_bound_wave, integrated_intensity_cgs))
+print("The Intensity (cgs) wave for [  %.1f , %.1f ] is : %g" % (low_bound_wave, high_bound_wave, integrated_intensity_cgs))
 #integrated_intensity_freq_cgs = integrate_basic( B_freq_cgsLIST, boundfreqLIST, low_bound_freq, high_bound_freq )
 #print("The Intensity (mks) freq for [  %.1f , %.1f ] is : %g" % (low_bound_freq, high_bound_freq, integrated_intensity_freq_cgs))
 radius = 5. 
 intensity_cgs_value =  calc_B_wavelength_cgs( Temp_k, specific_wave)
-print("The Intensity (cgs) specific wave for [  %.3e ]cm is : %.5e" % ( specific_wave , intensity_cgs_value))
+intensity_eyecgs_value =  calc_B_wavelength_cgs( Temp_k, specific_wave_eye)
+
+#print("The Intensity (cgs) specific wave for [  %.3e ]cm is : %.5e" % ( specific_wave , intensity_cgs_value))
+print("The Intensity (cgs) specific wave for [  %.3e ]cm is : %.5e" % ( specific_wave_eye , intensity_cgs_value))
 print("The Intensity (mks) specific wave for [  %.3e ] m is : %.5e" % ( specific_wave/100. , calc_B_wavelength_cgs( Temp_k, specific_wave/100.)))
 print("Specific Wavelength ==> %g Angstroms" % (specific_wave * (10**8.))) 
 
+
+#Find Photons emitted from an eye. 
+energy_photon_joules = h_cgs * c_cgs / specific_wave_eye 
+energy_photon_ergs = energy_photon_joules * (10**7.)
+eye_radius = 1. 
+eye_surface_area = get_surfacearea_cgs( eye_radius )
+num_eyephotons = intensity_eyecgs_value * eye_surface_area / energy_photon_ergs
+print("Peak [cm]= %.7f " % specific_wave_eye)
+print("The # of photons emitted from the eye at peak: %.4e " % num_eyephotons)
 #Find Photons emitted from a potato. 
 energy_photon_joules = h_cgs * c_cgs / specific_wave 
 energy_photon_ergs = energy_photon_joules * (10**7.)
 potato_radius = 5. 
 potato_surface_area = get_surfacearea_cgs( potato_radius )
 num_photons = intensity_cgs_value * potato_surface_area / energy_photon_ergs
+print("Peak [cm]= %.7e " % specific_wave)
 print("The # of photons emitted from a potato: %.4e " % num_photons)
 #in cm: http://faculty.buffalostate.edu/sabatojs/courses/GES639/S10/reading/mass_luminosity.pdf
 star_radius = 1.33*((25)**.555) * 69 * (10**9.)
