@@ -18,26 +18,27 @@ print("It will find roots given a single equation. yep. ")
 ===============================
 FUNCTION:
 	
-	(3-x)e^x  =  3  
+	(5-x)e^x  =  5  
 
- ===>  f(x) = (3-x)e^x - 3  =  0  
+ ===>  f(x) = (5-x)e^x - 5  =  0  
 
 ===============================
 """
 
 def func( x ):
 	#This is the function function its function is to be functionally functional
-	return ((3. - x ) * math.exp(x) - 3.)
+	return ((5. - x ) * math.exp(x) - 5.)
 
-def calc_freq( x_val ):
+def calc_wavelength( x_val ):
 	#Finds CGS wavelength given a root for x. 
 	h = 6.62607 * (10 ** -27. )
 	c = 3.0 * ( 10 ** 10.)
 	k = 1.380648 * (10 ** -16.)
 	T = 533.15
 
-	freq = x_val * ( k * T ) / ( h )
-	return freq
+	wave = h * c / ( k * T * x_val )
+	return wave
+
 
 def plot_basic( xlist, ylist, title, xlab, ylab, legend_val, psize, xlog, ylog, yflip , pcounter):
 	print("Entered Basic Plot Function")
@@ -168,11 +169,11 @@ else:
 	print("YAY!. Printing values....\n\n")
 	print("Roots for x:  {0.0000 , %.4f } " % new_guess)
 
-print("Calculating FREQUENCY Max...")
-freq_value = calc_freq( new_guess )
-print("Frequency [Hz]: %.5e " % freq_value)
+print("Calculating Wavelength Max...")
 
-
+wavelength_value = calc_wavelength( new_guess )
+print("Wavelength [cm]: %.5e " % wavelength_value)
+print("Wavelength [A] : %.5e " % (wavelength_value*(10**8.)))
 
 
 print("Now Plotting. ...")
